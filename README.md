@@ -13,6 +13,10 @@ vue add vuetify
 
 https://docs.aws.amazon.com/ja_jp/amplify/latest/userguide/multi-environments.html
 
+## Memo
+
+https://dev.to/dabit3/the-complete-guide-to-user-authentication-with-the-amplify-framework-2inh
+
 ## Amplify Checkout
 ```
 amplify env checkout [pro/dev]
