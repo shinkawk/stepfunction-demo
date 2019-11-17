@@ -1,0 +1,26 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-stepfunctiondemo-dev-160757-authRole",
+            "UnauthRoleArn": "arn:aws:iam::970605415303:role/amplify-stepfunctiondemo-dev-160757-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::970605415303:role/amplify-stepfunctiondemo-dev-160757-authRole",
+            "Region": "ap-northeast-1",
+            "DeploymentBucketName": "amplify-stepfunctiondemo-dev-160757-deployment",
+            "UnauthRoleName": "amplify-stepfunctiondemo-dev-160757-unauthRole",
+            "StackName": "amplify-stepfunctiondemo-dev-160757",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:970605415303:stack/amplify-stepfunctiondemo-dev-160757/fc3520b0-0908-11ea-9d30-060319ee749a"
+        }
+    },
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-stepfunctiondemo-prod-161016-authRole",
+            "UnauthRoleArn": "arn:aws:iam::970605415303:role/amplify-stepfunctiondemo-prod-161016-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::970605415303:role/amplify-stepfunctiondemo-prod-161016-authRole",
+            "Region": "ap-northeast-1",
+            "DeploymentBucketName": "amplify-stepfunctiondemo-prod-161016-deployment",
+            "UnauthRoleName": "amplify-stepfunctiondemo-prod-161016-unauthRole",
+            "StackName": "amplify-stepfunctiondemo-prod-161016",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:970605415303:stack/amplify-stepfunctiondemo-prod-161016/4f12f6e0-0909-11ea-81c7-0af1581a9dde"
+        }
+    }
+}
