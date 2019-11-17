@@ -1,1 +1,30 @@
-{}
+{
+	"auth": {
+		"stepfunctiondemoaae9476b": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"api": {
+		"todo": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "OPENID_CONNECT",
+						"openIDConnectConfig": {
+							"name": "auth0",
+							"issuerUrl": "https://dev-wkynz3v4.auth0.com/",
+							"clientId": "9ygzuZftwJKmMS3z67wAOlzTKo47EZLi",
+							"iatTTL": "60000",
+							"authTTL": "60000"
+						}
+					}
+				}
+			}
+		}
+	}
+}

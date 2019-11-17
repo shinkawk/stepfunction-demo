@@ -9,6 +9,11 @@
             "UnauthRoleName": "amplify-stepfunctiondemo-dev-160757-unauthRole",
             "StackName": "amplify-stepfunctiondemo-dev-160757",
             "StackId": "arn:aws:cloudformation:ap-northeast-1:970605415303:stack/amplify-stepfunctiondemo-dev-160757/fc3520b0-0908-11ea-9d30-060319ee749a"
+        },
+        "categories": {
+            "auth": {
+                "stepfunctiondemoaae9476b": {}
+            }
         }
     },
     "prod": {
