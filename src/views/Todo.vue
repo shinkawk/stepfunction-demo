@@ -2,9 +2,11 @@
   <div>
     <img :src="$auth.user.picture">
     <h2>{{ $auth.user.name }}</h2>
-    <input v-model="input.name" type="text"  placeholder="Enter your name">
-    <input v-model="input.description" type="text" placeholder="Enter taskname">
-    <button class="button is-link" @click="createTodo">ADD</button>
+    <v-form>
+    <v-text-field v-model="input.name" type="text"  placeholder="Enter your name"></v-text-field>
+    <v-text-field v-model="input.description" type="text" placeholder="Enter taskname"></v-text-field>
+    <v-btn class="button is-link" @click="createTodo">ADD</v-btn>
+    </v-form>
     <ul id="todo">
       <li v-for="todo in todos" v-bind:key="todo.id">
         <span class="todo-wrapper">{{ todo.name }}</span>

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from './router'
+import vuetify from '@/plugins/vuetify' // path to vuetify export
 
 // Import the Auth0 configuration
 import { domain, clientId } from "../auth_config.json";
@@ -24,6 +25,7 @@ Vue.use(Auth0Plugin, {
 Vue.config.productionTip = false;
 
 new Vue({
+  vuetify,
   router,
   render: h => h(App)
 }).$mount("#app");

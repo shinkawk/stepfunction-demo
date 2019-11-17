@@ -3,9 +3,9 @@
     <!-- Check that the SDK client is not currently loading before accessing is methods -->
     <div v-if="!$auth.loading">
       <!-- show login when not authenticated -->
-      <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>
+      <v-btn v-if="!$auth.isAuthenticated" @click="login">Log in</v-btn>
       <!-- show logout when authenticated -->
-      <button v-if="$auth.isAuthenticated" @click="logout">Log out</button>
+      <v-btn v-if="$auth.isAuthenticated" @click="logout">Log out</v-btn>
     </div>
   </div>
 </template>
