@@ -16,6 +16,7 @@ https://docs.aws.amazon.com/ja_jp/amplify/latest/userguide/multi-environments.ht
 ## Memo
 
 https://dev.to/dabit3/the-complete-guide-to-user-authentication-with-the-amplify-framework-2inh
+https://www.storyblok.com/tp/how-to-auth0-vuejs-authentication
 
 ## Amplify Checkout
 ```
