@@ -9,9 +9,14 @@ npm i aws-amplify-vue
 vue add vuetify 
 ```
 
-##開発フロー
+## 開発フロー
+
 https://docs.aws.amazon.com/ja_jp/amplify/latest/userguide/multi-environments.html
 
+## Amplify Checkout
+```
+amplify env checkout [pro/dev]
+```
 
 ### Compiles and hot-reloads for development
 ```
