@@ -2,11 +2,24 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link v-if="$auth.isAuthenticated" to="/todo">Todo</router-link>
+      <router-link v-if="isAuthenticated" to="/todo">Todo</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  name: 'App',
+  computed: {
+    ...mapState([
+      'isAuthenticated'
+    ]),
+  }
+}
+</script>>
 
 <style lang="scss">
 #app {

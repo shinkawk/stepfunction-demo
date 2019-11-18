@@ -2,30 +2,32 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from './router'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
+import createAuth0Client from "@auth0/auth0-spa-js";
 
 // Import the Auth0 configuration
 import { domain, clientId } from "../auth_config.json";
 
-// Import the plugin here
-import { Auth0Plugin } from "./auth";
+import store from './store'
 
-// Install the authentication plugin here
-Vue.use(Auth0Plugin, {
-  domain,
-  clientId,
-  onRedirectCallback: appState => {
-    router.push(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname
-    );
-  }
-});
+/** Define a default action to perform after authentication */
+const DEFAULT_REDIRECT_CALLBACK = () =>
+  window.history.replaceState({}, document.title, window.location.pathname);
 
-Vue.config.productionTip = false;
+store.state.instance = await createAuth0Client({
+  domain: store.state.domain,
+  client_id: store.state.clientId,
+  //audience: options.audience,
+  redirect_uri: window.location.origin,
+  onRedirectCallback: DEFAULT_REDIRECT_CALLBACK
+})
+
+store.state.domain = domain;
+store.state.clientId = clientId;
+
 
 new Vue({
   vuetify,
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
