@@ -2,25 +2,21 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link v-if="this.isAuthenticated" to="/todo">Todo</router-link>
+      <router-link v-if="getIsAuthenticated" to="/todo">Todo</router-link>
     </div>
     <router-view/>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'App',
   computed: {
-    ...mapState([
-      'isAuthenticated'
-    ]),
     ...mapGetters([
       'getIsAuthenticated'
-    ]
-    )
+    ])
   },
   created(){
     this.$store.dispatch('created');

@@ -12,25 +12,16 @@
 
 <script>
 // @ is an alias to /src
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
-  name: 'home',
+  name: "home",
   computed: {
-    ...mapState([
-      'loading',
-    ]),
-    ...mapGetters([
-      'getIsAuthenticated',
-      'getIsLoading',
-      ])
+    ...mapState(["loading"]),
+    ...mapGetters(["getIsAuthenticated", "getIsLoading"])
   },
   methods: {
-    ...mapActions([
-      'loginWithRedirect',
-    ]),
-    logout() {
-    }
+    ...mapActions(["loginWithRedirect", "logout"]),
   }
-}
+};
 </script>

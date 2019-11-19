@@ -8,8 +8,6 @@ export default ({
     // the state
     state: {
         instance: null,
-        loading: true,
-        isAuthenticated: false,
         user: {},
         auth0Client: null,
         error: null,
@@ -20,8 +18,8 @@ export default ({
     // tells you something more complicated about the state (or readonly view of the state)
     getters: {
         getUser: state => { return state.user },
-        getIsAuthenticated: state => { return state.token != null},
-        getIsLoading: state => {return state.auth0Client == null},
+        getIsAuthenticated: state => { return state.token != null },
+        getIsLoading: state => { return state.auth0Client == null },
     },
     // updates the state
     mutations: {
@@ -31,7 +29,7 @@ export default ({
         setToken: (state, token) => {
             state.token = token;
         },
-        setClient: (state, client) =>{
+        setClient: (state, client) => {
             state.auth0Client = client;
         },
     },
@@ -66,8 +64,8 @@ export default ({
             }
         },
         /** Authenticates the user using the redirect method */
-        async loginWithRedirect({state}, o) {
-            return state.auth0Client.loginWithRedirect(o);
+        async loginWithRedirect({ state }) {
+            return state.auth0Client.loginWithRedirect();
         },
         /** Returns all the claims present in the ID token */
         getIdTokenClaims(o) {
@@ -83,21 +81,27 @@ export default ({
             return this.auth0Client.getTokenWithPopup(o);
         },
         /** Logs the user out and removes their session on the authorization server */
-        logout(o) {
-            return this.auth0Client.logout(o);
+        logout({ state }) {
+            return state.auth0Client.logout({ returnTo: window.location.origin });
         },
         async created(context) {
             // eslint-disable-next-line
             console.log("Init auth.js");
             // Create a new instance of the SDK client using members of the given options object
-            const auth0Client = await createAuth0Client({
-                domain: this.domain,
-                client_id: this.clientId,
-                // audience: options.audience,
-                redirect_uri: window.location.origin,
-                onRedirectCallback: DEFAULT_REDIRECT_CALLBACK,
-            });
-           
+            let auth0Client = null;
+            if (context.state.auth0Client == null) {
+                auth0Client = await createAuth0Client({
+                    domain: domain,
+                    client_id: clientId,
+                    // audience: options.audience,
+                    redirect_uri: window.location.origin,
+                    onRedirectCallback: DEFAULT_REDIRECT_CALLBACK,
+                });
+
+                // eslint-disable-next-line
+                console.log(auth0Client);
+                context.commit("setClient", auth0Client)
+            }
             try {
                 // If the user is returning to the app after authentication..
                 if (
@@ -105,31 +109,24 @@ export default ({
                     window.location.search.includes("state=")
                 ) {
                     // handle the redirect and retrieve tokens
-                    const { appState } = await auth0Client.handleRedirectCallback();
-
+                    const { appState } = await context.state.auth0Client.handleRedirectCallback();
                     // Notify subscribers that the redirect callback has happened, passing the appState
                     // (useful for retrieving any pre-authentication state)
                     DEFAULT_REDIRECT_CALLBACK(appState);
                 }
             } catch (e) {
                 // eslint-disable-next-line
-                console.error(e);            
+                console.error(e);
             } finally {
-                const user = await auth0Client.getUser();
-                context.commit('setUser', user);
-
-                if(user){
-                    const token = await auth0Client.getTokenSilently();
+                if (context.state.auth0Client.isAuthenticated()) {
+                    const user = await context.state.auth0Client.getUser();
+                    context.commit('setUser', user);
+                    const token = await context.state.auth0Client.getTokenSilently();
                     context.commit('setToken', token);
                 }
-
-                // eslint-disable-next-line
-                console.log(auth0Client);
-                context.commit("setClient", auth0Client)
-                
-                // eslint-disable-next-line
-                console.log("auth.js init completed");
             }
+            // eslint-disable-next-line
+            console.log("auth.js init completed");
         },
     },
 });
