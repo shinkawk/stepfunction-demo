@@ -7,7 +7,6 @@ const DEFAULT_REDIRECT_CALLBACK = () =>
 export default ({
     // the state
     state: {
-        instance: null,
         user: {},
         auth0Client: null,
         error: null,
@@ -18,6 +17,7 @@ export default ({
     // tells you something more complicated about the state (or readonly view of the state)
     getters: {
         getUser: state => { return state.user },
+        getClient: state => state.auth0Client,
         getIsAuthenticated: state => { return state.token != null },
         getIsLoading: state => { return state.auth0Client == null },
     },
@@ -64,8 +64,8 @@ export default ({
             }
         },
         /** Authenticates the user using the redirect method */
-        async loginWithRedirect({ state }) {
-            return state.auth0Client.loginWithRedirect();
+        async loginWithRedirect({ state }, o) {
+            return state.auth0Client.loginWithRedirect(o);
         },
         /** Returns all the claims present in the ID token */
         getIdTokenClaims(o) {
