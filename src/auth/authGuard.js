@@ -1,12 +1,15 @@
 import store from '../store'
 
 export const authGuard = async (to, from, next) => {
-  await store.dispatch('created');
-  const authService = store.state.auth0Client;
+  const authService = await store.dispatch('created');
+  // eslint-disable-next-line
+  console.log("After created");
+  // eslint-disable-next-line
+  console.log(authService);
 
     const fn = () => {
       // If the user is authenticated, continue with the route
-      if (authService.isAuthenticated) {
+      if (store.getters.getIsAuthenticated) {
         return next();
       }
   
@@ -19,7 +22,7 @@ export const authGuard = async (to, from, next) => {
       return fn();
     }
     store.watch(store.getters.getIsLoading, (isLoading) => {
-      if (isLoading)
+      if (!isLoading)
       return fn();
     })
 };

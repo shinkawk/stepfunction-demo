@@ -17,7 +17,7 @@ export default ({
     // tells you something more complicated about the state (or readonly view of the state)
     getters: {
         getUser: state => { return state.user },
-        getClient: state => state.auth0Client,
+        getClient: state => { return state.auth0Client },
         getIsAuthenticated: state => { return state.token != null },
         getIsLoading: state => { return state.auth0Client == null },
     },
@@ -118,7 +118,8 @@ export default ({
                 // eslint-disable-next-line
                 console.error(e);
             } finally {
-                if (context.state.auth0Client.isAuthenticated()) {
+                let authenticated = await context.state.auth0Client.isAuthenticated()
+                if (authenticated) {
                     const user = await context.state.auth0Client.getUser();
                     context.commit('setUser', user);
                     const token = await context.state.auth0Client.getTokenSilently();
@@ -127,6 +128,7 @@ export default ({
             }
             // eslint-disable-next-line
             console.log("auth.js init completed");
+            return await context.state.auth0Client;
         },
     },
 });
