@@ -1,6 +1,8 @@
 import createAuth0Client from "@auth0/auth0-spa-js";
 import { domain, clientId } from "../../../auth_config.json";
 
+import { Auth } from 'aws-amplify';
+
 const DEFAULT_REDIRECT_CALLBACK = () =>
     window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -124,6 +126,36 @@ export default ({
                     context.commit('setUser', user);
                     const token = await context.state.auth0Client.getTokenSilently();
                     context.commit('setToken', token);
+                    let idToken = await context.state.auth0Client.getIdTokenClaims()
+                     // eslint-disable-next-line
+                     console.log(idToken.__raw)
+                    Auth.federatedSignIn(
+                        domain,
+                        {
+                            token: idToken.__raw,
+                            //identity_id, // Optional
+                            expires_at: context.state.auth0Client.cache.cache.expiresIn * 1000 + new Date().getTime() // the expiration timestamp
+                        },
+                        user
+                    ).then(cred => {
+                        // If success, you will get the AWS credentials
+                        // eslint-disable-next-line
+                        console.log(cred);
+                        return Auth.currentAuthenticatedUser();
+                    }).then(user => {
+                        // If success, the user object you passed in Auth.federatedSignIn
+                        // eslint-disable-next-line
+                        console.log(user);
+                    }).catch(e => {
+                        // eslint-disable-next-line
+                        console.log(e)
+                    });
+                    Auth.currentAuthenticatedUser().then(user => 
+                        // eslint-disable-next-line
+                        console.log(user));
+                    Auth.currentCredentials().then(creds => 
+                        // eslint-disable-next-line
+                        console.log(creds));
                 }
             }
             // eslint-disable-next-line

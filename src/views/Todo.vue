@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img :src="$auth.user.picture">
-    <h2>{{ $auth.user.name }}</h2>
+    <img :src="getUser.picture">
+    <h2>{{ getUser.name }}</h2>
     <v-form>
     <v-text-field v-model="input.name" type="text"  placeholder="Enter your name"></v-text-field>
     <v-text-field v-model="input.description" type="text" placeholder="Enter taskname"></v-text-field>
@@ -20,9 +20,13 @@
 import {API, graphqlOperation} from 'aws-amplify'
 import * as mutations from '@/graphql/mutations'
 import * as queries from '@/graphql/queries'
+import { mapGetters } from "vuex";
 
 export default {
   name: 'todo',
+    computed: {
+    ...mapGetters(["getUser"]),
+  },
     data: function () {
     return {
       input: {
